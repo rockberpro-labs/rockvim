@@ -4,3 +4,6 @@
 
 -- Use intelephense (free tier) for PHP instead of phpactor
 vim.g.lazyvim_php_lsp = "intelephense"
+
+-- Don't format on save; only format via the explicit format command (<leader>cf)
+vim.g.autoformat = false
