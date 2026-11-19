@@ -4,7 +4,13 @@ return {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = function()
-        require("monokai").setup({ palette = require("monokai").soda })
+        require("monokai").setup({
+          palette = require("monokai").soda,
+          custom_hlgroups = {
+            Visual = { bg = "#49483E" },
+            VisualNOS = { bg = "#49483E" },
+          },
+        })
       end,
     },
   },
