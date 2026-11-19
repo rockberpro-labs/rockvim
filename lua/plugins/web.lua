@@ -30,6 +30,24 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        -- gD: declaration isn't supported by intelephense/vtsls/vue_ls, fall back to definition
+        ["*"] = {
+          keys = {
+            {
+              "gD",
+              function()
+                local bufnr = vim.api.nvim_get_current_buf()
+                for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+                  if client:supports_method("textDocument/declaration", bufnr) then
+                    return vim.lsp.buf.declaration()
+                  end
+                end
+                vim.lsp.buf.definition()
+              end,
+              desc = "Goto Declaration (or Definition)",
+            },
+          },
+        },
         intelephense = {
           before_init = function(_, config)
             local version = composer_php_version(config.root_dir)
