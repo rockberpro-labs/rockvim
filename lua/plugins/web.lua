@@ -25,6 +25,14 @@ local function composer_php_version(root)
   return table.concat(parts, ".")
 end
 
+-- Nearest phpstan config above `path` (file or directory), if any
+local function phpstan_config(path)
+  return vim.fs.find({ "phpstan.neon", "phpstan.neon.dist", "phpstan.dist.neon" }, {
+    path = path,
+    upward = true,
+  })[1]
+end
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -73,7 +81,37 @@ return {
   },
   {
     "mason-org/mason.nvim",
-    opts = { ensure_installed = { "blade-formatter" } },
+    opts = { ensure_installed = { "blade-formatter", "phpstan" } },
+  },
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      -- repeat phpcs: lists are replaced, not merged
+      linters_by_ft = { php = { "phpcs", "phpstan" } },
+      linters = {
+        phpstan = {
+          -- Only run in projects that opted in with a phpstan config
+          condition = function(ctx)
+            return phpstan_config(ctx.dirname) ~= nil
+          end,
+          -- Project's own phpstan (matching version + extensions), else the one on PATH
+          cmd = function()
+            local config = phpstan_config(vim.api.nvim_buf_get_name(0))
+            local local_bin = config and (vim.fs.dirname(config) .. "/vendor/bin/phpstan")
+            return local_bin and vim.fn.executable(local_bin) == 1 and local_bin or "phpstan"
+          end,
+          args = {
+            "analyze",
+            "--error-format=json",
+            "--no-progress",
+            "--memory-limit=1G",
+            function()
+              return "--configuration=" .. phpstan_config(vim.api.nvim_buf_get_name(0))
+            end,
+          },
+        },
+      },
+    },
   },
   {
     "stevearc/conform.nvim",
