@@ -12,3 +12,13 @@ vim.g.autoformat = false
 vim.opt.autoindent = true
 vim.opt.smartindent = false
 vim.opt.breakindent = true
+
+-- Filetype/treesitter indentexpr overrides autoindent; clear it so new lines copy the previous indent
+vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
+  callback = function()
+    vim.opt_local.indentexpr = ""
+    vim.opt_local.cindent = false
+    vim.opt_local.smartindent = false
+    vim.opt_local.autoindent = true
+  end,
+})
