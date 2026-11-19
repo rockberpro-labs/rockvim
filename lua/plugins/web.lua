@@ -49,6 +49,10 @@ return {
           },
         },
         intelephense = {
+          settings = {
+            -- Index files using `<?` short open tags (server's workspace default is false)
+            intelephense = { environment = { shortOpenTag = true } },
+          },
           before_init = function(_, config)
             local version = composer_php_version(config.root_dir)
             if version then
