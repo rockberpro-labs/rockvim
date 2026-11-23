@@ -67,6 +67,8 @@ Essential keys to get minimally competent with LazyVim. Mostly LazyVim and Vim d
 | --- | --- |
 | `w` / `b` | Next / previous word |
 | `0` / `$` | Start / end of line |
+| `Ctrl+_` / `Ctrl+0` | Go to beginning of line |
+| `Ctrl+$` | Go to end of line |
 | `Ctrl+b` / `Ctrl+f` | Page up / down |
 | `*` then `n` | Search word under cursor, next match |
 | `Ctrl+o` / `Ctrl+i` | Jump back / forward |
