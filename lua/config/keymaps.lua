@@ -101,4 +101,8 @@ vim.keymap.set("n", "<leader>cfi", function()
   })
 end, { desc = "Format inner block" })
 
-require("which-key").add({ { "<leader>cf", group = "format" } })
+require("which-key").add({
+  { "<leader>cf", group = "format" },
+  { "<leader>p", group = "paste", icon = "󰆒 " },
+  { "<leader>pi", group = "paste inside" },
+})
