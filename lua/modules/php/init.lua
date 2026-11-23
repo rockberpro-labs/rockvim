@@ -7,6 +7,18 @@ vim.filetype.add({
   pattern = { [".*%.blade%.php"] = "blade" },
 })
 
+-- PHP indents with 4 spaces (PSR-12); LazyVim's global default is 2
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("user_php_indent", { clear = true }),
+  pattern = "php",
+  callback = function()
+    vim.opt_local.expandtab = true
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.tabstop = 4
+    vim.opt_local.softtabstop = 4
+  end,
+})
+
 -- Lowest PHP version a project supports, from composer.json (platform pin, else require.php)
 local function composer_php_version(root)
   local path = root and (root .. "/composer.json")
