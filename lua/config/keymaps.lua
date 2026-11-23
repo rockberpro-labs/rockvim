@@ -7,7 +7,7 @@ vim.keymap.set("n", "<leader>xc", "<cmd>cexpr [] | cclose<cr>", { desc = "Clear 
 -- Paste the unnamed register inside the innermost bracket pair around the
 -- cursor (on the opening/closing bracket or anywhere inside), moving the
 -- closing bracket onto its own line below the pasted text and reindenting.
-vim.keymap.set("n", "<leader>pi", function()
+vim.keymap.set("n", "<leader>pib", function()
   local best
   for _, p in ipairs({ { "{", "}" }, { "(", ")" }, { "[", "]" } }) do
     local o, c = "\\V" .. p[1], "\\V" .. p[2]
@@ -60,7 +60,7 @@ vim.keymap.set("n", "<leader>pi", function()
   vim.cmd(string.format("silent %d,%dnormal! ==", orow + 1, last))
   vim.api.nvim_win_set_cursor(0, { crow, 0 })
   vim.cmd("normal! ^")
-end, { desc = "Paste inside brackets (reflow)" })
+end, { desc = "Paste inside bracket block (reflow)" })
 
 -- Format scopes: <leader>cf is a pure prefix (no action on timeout)
 --   cff = whole file, cfi = inner block around cursor, cfs = visual selection
