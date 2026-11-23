@@ -8,6 +8,7 @@ return {
           section = "terminal",
           -- logo.txt stores the escape char as the literal "␛" symbol, so convert it back
           cmd = "sed 's/␛/\\x1b/g' " .. vim.fn.stdpath("config") .. "/logo.txt",
+          ttl = 0, -- no caching, so edits to logo.txt show immediately
           height = 7,
           width = 76,
           padding = 1,
