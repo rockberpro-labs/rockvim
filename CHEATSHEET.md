@@ -38,7 +38,9 @@ Essential keys to get minimally competent with LazyVim. Mostly LazyVim and Vim d
 | `gI` | Go to implementation |
 | `gy` | Go to type definition |
 | `gD` | Declaration (falls back to definition) |
-| `<leader>cf` | Format (custom: no format on save) |
+| `<leader>cff` | Format whole file (custom: no format on save) |
+| `<leader>cfi` | Format inner block around cursor (custom) |
+| `<leader>cfs` | Format visual selection (custom) |
 
 ## Quickfix
 

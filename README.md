@@ -18,7 +18,7 @@
 - **Custom dashboard** with the RockVim ANSI logo (`logo.txt`); `<leader>D` reopens it
 - **Explorer** on the right side, not opened automatically on `nvim .`
 - **blink.cmp** super-tab: Tab accepts, Enter always inserts a newline
-- **No format on save**: format explicitly with `<leader>cf`
+- **No format on save**: format explicitly with `<leader>cff`
 - **Indent** copies the previous line instead of using filetype indent rules
 - **`gD`** falls back to go-to-definition when the LSP has no declaration support
 - **Extras**: Claude Code, JSON, Markdown
