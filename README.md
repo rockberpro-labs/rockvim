@@ -24,6 +24,8 @@
 - **Extras**: Claude Code, JSON, Markdown
 - **Per-machine language modules** (PHP, TypeScript), see below
 
+See [CHEATSHEET.md](CHEATSHEET.md) for keybindings.
+
 ## Requirements
 
 - Neovim >= 0.11
