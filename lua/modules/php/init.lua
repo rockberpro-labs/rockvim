@@ -1,3 +1,7 @@
+-- PHP / Laravel module: Intelephense, phpcs/phpstan, Blade
+-- Must be set before the extra below is loaded (it reads this at load time)
+vim.g.lazyvim_php_lsp = "intelephense"
+
 -- Blade (Laravel) support
 vim.filetype.add({
   pattern = { [".*%.blade%.php"] = "blade" },
@@ -34,28 +38,11 @@ local function phpstan_config(path)
 end
 
 return {
+  { import = "lazyvim.plugins.extras.lang.php" },
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        -- gD: declaration isn't supported by intelephense/vtsls/vue_ls, fall back to definition
-        ["*"] = {
-          keys = {
-            {
-              "gD",
-              function()
-                local bufnr = vim.api.nvim_get_current_buf()
-                for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
-                  if client:supports_method("textDocument/declaration", bufnr) then
-                    return vim.lsp.buf.declaration()
-                  end
-                end
-                vim.lsp.buf.definition()
-              end,
-              desc = "Goto Declaration (or Definition)",
-            },
-          },
-        },
         intelephense = {
           settings = {
             -- Index files using `<?` short open tags (server's workspace default is false)
@@ -76,7 +63,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
-      ensure_installed = { "blade", "php_only", "html", "css", "scss", "jsdoc" },
+      ensure_installed = { "blade", "php_only", "html", "css", "scss" },
     },
   },
   {
