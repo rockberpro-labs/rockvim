@@ -23,11 +23,11 @@ return {
     picker = {
       sources = {
         explorer = { layout = { layout = { position = "right" } } },
-        -- open grep results in a new tab
+        -- open grep results in a tab (reuses the tab if the file is already open)
         grep = {
           win = {
-            input = { keys = { ["<CR>"] = { "tab", mode = { "n", "i" } } } },
-            list = { keys = { ["<CR>"] = { "tab", mode = { "n" } } } },
+            input = { keys = { ["<CR>"] = { "tabdrop", mode = { "n", "i" } } } },
+            list = { keys = { ["<CR>"] = { "tabdrop", mode = { "n" } } } },
           },
         },
       },
