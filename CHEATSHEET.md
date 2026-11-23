@@ -54,6 +54,8 @@ Essential keys to get minimally competent with LazyVim. Mostly LazyVim and Vim d
 | `J` | Join lines |
 | `ciw` | Change inside word |
 | `y` / `p` | Yank / paste |
+| `]p` | Paste with indent adjusted to current line |
+| `=` | Reindent (e.g. `=']` after paste; uses `indentexpr`, works in PHP) |
 | `u` / `Ctrl+r` | Undo / redo |
 | `Ctrl+v` | Visual block |
 | `%` | Jump to matching bracket |
