@@ -13,6 +13,10 @@ vim.opt.breakindent = true
 -- Filetype/treesitter indentexpr overrides autoindent; clear it so new lines copy the previous indent
 vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
   callback = function()
+    -- PHP keeps its indentexpr so = can reindent
+    if vim.bo.filetype == "php" then
+      return
+    end
     vim.opt_local.indentexpr = ""
     vim.opt_local.cindent = false
     vim.opt_local.smartindent = false
