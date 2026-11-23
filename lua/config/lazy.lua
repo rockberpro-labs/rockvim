@@ -14,13 +14,28 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Language modules enabled on this machine (lua/config/modules.lua, gitignored)
+local ok, enabled = pcall(require, "config.modules")
+if not ok or type(enabled) ~= "table" then
+  enabled = {}
+end
+
+local spec = { { "LazyVim/LazyVim", import = "lazyvim.plugins" } }
+for _, name in ipairs(enabled) do
+  local init = vim.fn.stdpath("config") .. "/lua/modules/" .. name .. "/init.lua"
+  if (vim.uv or vim.loop).fs_stat(init) then
+    table.insert(spec, { import = "modules." .. name })
+  else
+    vim.schedule(function()
+      vim.notify("Unknown language module: " .. name, vim.log.levels.WARN)
+    end)
+  end
+end
+-- your plugins last, so they can override anything above
+table.insert(spec, { import = "plugins" })
+
 require("lazy").setup({
-  spec = {
-    -- add LazyVim and import its plugins
-    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- import/override with your plugins
-    { import = "plugins" },
-  },
+  spec = spec,
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
     -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
