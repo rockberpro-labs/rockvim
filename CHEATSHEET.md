@@ -54,6 +54,7 @@ Essential keys to get minimally competent with LazyVim. Mostly LazyVim and Vim d
 | Key | Action |
 | --- | --- |
 | `J` | Join lines |
+| `Alt+k` / `Alt+j` | Move line up / down |
 | `ciw` | Change inside word |
 | `y` / `p` | Yank / paste |
 | `]p` | Paste with indent adjusted to current line |
