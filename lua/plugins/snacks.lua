@@ -23,6 +23,13 @@ return {
     picker = {
       sources = {
         explorer = { layout = { layout = { position = "right" } } },
+        -- open grep results in a new tab
+        grep = {
+          win = {
+            input = { keys = { ["<CR>"] = { "tab", mode = { "n", "i" } } } },
+            list = { keys = { ["<CR>"] = { "tab", mode = { "n" } } } },
+          },
+        },
       },
     },
   },
