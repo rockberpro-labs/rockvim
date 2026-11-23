@@ -17,6 +17,8 @@ return {
         { section = "startup" },
       },
     },
+    -- don't auto-open the explorer when nvim starts on a directory (`nvim .`)
+    explorer = { replace_netrw = false },
     picker = {
       sources = {
         explorer = { layout = { layout = { position = "right" } } },
