@@ -57,7 +57,7 @@ Essential keys to get minimally competent with LazyVim. Mostly LazyVim and Vim d
 | `ciw` | Change inside word |
 | `y` / `p` | Yank / paste |
 | `]p` | Paste with indent adjusted to current line |
-| `<leader>pi` | Paste inside bracket under cursor, moving the closing bracket down (custom) |
+| `<leader>pi` | Paste inside the bracket pair on/around cursor, moving the closing bracket down; charwise or linewise yanks (custom) |
 | `=` | Reindent (e.g. `=']` after paste; uses `indentexpr`, works in PHP) |
 | `u` / `Ctrl+r` | Undo / redo |
 | `Ctrl+v` | Visual block |
