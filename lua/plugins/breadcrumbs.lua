@@ -1,5 +1,4 @@
 return {
-  { import = "lazyvim.plugins.extras.editor.navic" },
   {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
