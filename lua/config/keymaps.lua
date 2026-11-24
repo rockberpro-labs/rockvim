@@ -4,6 +4,18 @@
 
 vim.keymap.set("n", "<leader>xc", "<cmd>cexpr [] | cclose<cr>", { desc = "Clear Quickfix List" })
 
+-- Reorder bufferline buffers
+vim.keymap.set("n", "<leader>bL", "<cmd>BufferLineMoveNext<cr>", { desc = "Move buffer right" })
+vim.keymap.set("n", "<leader>bH", "<cmd>BufferLineMovePrev<cr>", { desc = "Move buffer left" })
+
+-- Reorder tabpages
+vim.keymap.set("n", "<leader><tab>L", function()
+  pcall(vim.cmd, "+tabmove")
+end, { desc = "Move tab right" })
+vim.keymap.set("n", "<leader><tab>H", function()
+  pcall(vim.cmd, "-tabmove")
+end, { desc = "Move tab left" })
+
 -- Paste the unnamed register inside the innermost bracket pair around the
 -- cursor (on the opening/closing bracket or anywhere inside). Pasted below the
 -- cursor line (after the opening line if on "{", before the closing bracket if
