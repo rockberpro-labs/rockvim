@@ -5,13 +5,14 @@
 vim.keymap.set("n", "<leader>xc", "<cmd>cexpr [] | cclose<cr>", { desc = "Clear Quickfix List" })
 
 -- Paste the unnamed register inside the innermost bracket pair around the
--- cursor (on the opening/closing bracket or anywhere inside), moving the
--- closing bracket onto its own line below the pasted text and reindenting.
+-- cursor (on the opening/closing bracket or anywhere inside). Pasted below the
+-- cursor line (after the opening line if on "{", before the closing bracket if
+-- on "}"), reindenting the pasted lines.
 vim.keymap.set("n", "<leader>pib", function()
   local best
+  local cur = vim.api.nvim_win_get_cursor(0)
   for _, p in ipairs({ { "{", "}" }, { "(", ")" }, { "[", "]" } }) do
     local o, c = "\\V" .. p[1], "\\V" .. p[2]
-    local cur = vim.api.nvim_win_get_cursor(0)
     local line = vim.api.nvim_get_current_line()
     local ch = line:sub(cur[2] + 1, cur[2] + 1)
     local open, close
@@ -46,19 +47,33 @@ vim.keymap.set("n", "<leader>pib", function()
   if #reg > 1 and reg[#reg] == "" then
     table.remove(reg)
   end
-  local orow, crow, ccol = best.open[1], best.close[1], best.close[2]
+  local orow, ocol, crow, ccol = best.open[1], best.open[2], best.close[1], best.close[2]
+  local at, extra = nil, 0
+  local function line(n)
+    return vim.api.nvim_buf_get_lines(0, n - 1, n, false)[1]
+  end
   if crow == orow then
     -- closing bracket on the opening line: move it (and what follows) to its own line
     vim.api.nvim_buf_set_text(0, crow - 1, ccol, crow - 1, ccol, { "", "" })
-    crow = crow + 1
-  elseif vim.api.nvim_buf_get_lines(0, crow - 1, crow, false)[1]:sub(1, ccol):match("%S") then
-    vim.api.nvim_buf_set_text(0, crow - 1, ccol, crow - 1, ccol, { "", "" })
-    crow = crow + 1
+    at, extra = crow + 1, 1
+  elseif cur[1] == crow then
+    if line(crow):sub(1, ccol):match("%S") then
+      vim.api.nvim_buf_set_text(0, crow - 1, ccol, crow - 1, ccol, { "", "" })
+      crow = crow + 1
+    end
+    at, extra = crow, 1
+  elseif cur[1] == orow then
+    if line(orow):sub(ocol + 2):match("%S") then
+      vim.api.nvim_buf_set_text(0, orow - 1, ocol + 1, orow - 1, ocol + 1, { "", "" })
+      extra = 1
+    end
+    at = orow + 1
+  else
+    at = cur[1] + 1
   end
-  vim.api.nvim_buf_set_lines(0, crow - 1, crow - 1, false, reg)
-  local last = crow - 1 + #reg + 1
-  vim.cmd(string.format("silent %d,%dnormal! ==", orow + 1, last))
-  vim.api.nvim_win_set_cursor(0, { crow, 0 })
+  vim.api.nvim_buf_set_lines(0, at - 1, at - 1, false, reg)
+  vim.cmd(string.format("silent %d,%dnormal! ==", at, at + #reg - 1 + extra))
+  vim.api.nvim_win_set_cursor(0, { at, 0 })
   vim.cmd("normal! ^")
 end, { desc = "Paste inside bracket block (reflow)" })
 
