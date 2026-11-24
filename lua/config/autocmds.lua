@@ -16,3 +16,12 @@ vim.api.nvim_create_autocmd({ "CursorHold", "BufEnter" }, {
     end
   end,
 })
+
+-- No spell checking in markdown (keeps wrap from LazyVim's wrap_spell)
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("user_markdown_nospell", { clear = true }),
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.spell = false
+  end,
+})
