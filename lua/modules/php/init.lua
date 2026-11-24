@@ -30,6 +30,24 @@ end
 return {
   { import = "lazyvim.plugins.extras.lang.php" },
   {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        phpactor = {
+          -- Run the Mason phar with short_open_tag on, so files opening with `<?` get parsed
+          -- (the system php.ini has it off, and phpactor's tokenizer follows the runtime setting)
+          cmd = {
+            "php",
+            "-d",
+            "short_open_tag=On",
+            vim.fn.stdpath("data") .. "/mason/packages/phpactor/phpactor.phar",
+            "language-server",
+          },
+        },
+      },
+    },
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = { "blade", "php_only", "html", "css", "scss" },
