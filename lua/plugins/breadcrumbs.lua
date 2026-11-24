@@ -10,7 +10,7 @@ return {
         end
       end
       local crumbs = {
-        { "filename", path = 0, symbols = { modified = "", readonly = "" } },
+        { "filename", path = 1, symbols = { modified = "", readonly = "" } },
         { "navic", color_correction = "dynamic", padding = { left = 1, right = 0 } },
       }
       opts.winbar = { lualine_c = crumbs }
