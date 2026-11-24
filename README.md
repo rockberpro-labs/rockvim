@@ -60,7 +60,7 @@ return { "php", "typescript" }
 
 | Module       | Includes                                                                                                   |
 | ------------ | ---------------------------------------------------------------------------------------------------------- |
-| `php`        | Intelephense (PHP version read from `composer.json`), phpcs, phpstan (only with a phpstan config), Blade   |
+| `php`        | phpactor (LSP, incl. rename), phpcs, phpstan (only with a phpstan config), Blade   |
 | `typescript` | vtsls, Vue, Tailwind, ESLint, Prettier                                                                     |
 
 > **Notes**

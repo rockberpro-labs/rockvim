@@ -3,7 +3,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        -- gD: declaration isn't supported by every server (intelephense/vtsls/vue_ls), fall back to definition
+        -- gD: declaration isn't supported by every server (vtsls/vue_ls and others), fall back to definition
         ["*"] = {
           keys = {
             {
