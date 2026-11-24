@@ -8,6 +8,11 @@ vim.keymap.set("n", "<leader>xc", "<cmd>cexpr [] | cclose<cr>", { desc = "Clear 
 vim.keymap.set("n", "<leader>bL", "<cmd>BufferLineMoveNext<cr>", { desc = "Move buffer right" })
 vim.keymap.set("n", "<leader>bH", "<cmd>BufferLineMovePrev<cr>", { desc = "Move buffer left" })
 
+-- Close all buffers
+vim.keymap.set("n", "<leader>ba", function()
+  Snacks.bufdelete.all()
+end, { desc = "Delete All Buffers" })
+
 -- Reorder tabpages
 vim.keymap.set("n", "<leader><tab>L", function()
   pcall(vim.cmd, "+tabmove")
