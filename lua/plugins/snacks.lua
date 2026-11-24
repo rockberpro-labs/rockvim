@@ -22,6 +22,8 @@ return {
     explorer = { replace_netrw = false },
     picker = {
       sources = {
+        -- literal search by default so `$var` works; <a-r> toggles regex
+        grep = { regex = false },
         explorer = { layout = { layout = { position = "right" } } },
       },
     },
