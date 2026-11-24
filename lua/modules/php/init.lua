@@ -1,6 +1,6 @@
--- PHP / Laravel module: Intelephense, phpcs/phpstan, Blade
+-- PHP / Laravel module: phpactor, phpcs/phpstan, Blade
 -- Must be set before the extra below is loaded (it reads this at load time)
-vim.g.lazyvim_php_lsp = "intelephense"
+vim.g.lazyvim_php_lsp = "phpactor"
 
 -- Blade (Laravel) support
 vim.filetype.add({
@@ -19,28 +19,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Lowest PHP version a project supports, from composer.json (platform pin, else require.php)
-local function composer_php_version(root)
-  local path = root and (root .. "/composer.json")
-  if not path or vim.fn.filereadable(path) == 0 then
-    return nil
-  end
-  local ok, composer = pcall(vim.json.decode, table.concat(vim.fn.readfile(path), "\n"))
-  if not ok or type(composer) ~= "table" then
-    return nil
-  end
-  local constraint = vim.tbl_get(composer, "config", "platform", "php") or vim.tbl_get(composer, "require", "php")
-  local version = type(constraint) == "string" and constraint:match("%d+%.?%d*%.?%d*")
-  if not version then
-    return nil
-  end
-  local parts = vim.split(version, ".", { plain = true, trimempty = true })
-  for i = #parts + 1, 3 do
-    parts[i] = "0"
-  end
-  return table.concat(parts, ".")
-end
-
 -- Nearest phpstan config above `path` (file or directory), if any
 local function phpstan_config(path)
   return vim.fs.find({ "phpstan.neon", "phpstan.neon.dist", "phpstan.dist.neon" }, {
@@ -55,19 +33,16 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        intelephense = {
-          settings = {
-            -- Index files using `<?` short open tags (server's workspace default is false)
-            intelephense = { environment = { shortOpenTag = true } },
+        phpactor = {
+          -- Run the Mason phar with short_open_tag on, so files opening with `<?` get parsed
+          -- (the system php.ini has it off, and phpactor's tokenizer follows the runtime setting)
+          cmd = {
+            "php",
+            "-d",
+            "short_open_tag=On",
+            vim.fn.stdpath("data") .. "/mason/packages/phpactor/phpactor.phar",
+            "language-server",
           },
-          before_init = function(_, config)
-            local version = composer_php_version(config.root_dir)
-            if version then
-              config.settings = vim.tbl_deep_extend("force", config.settings or {}, {
-                intelephense = { environment = { phpVersion = version } },
-              })
-            end
-          end,
         },
       },
     },
