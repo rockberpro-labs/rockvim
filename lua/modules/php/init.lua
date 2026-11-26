@@ -36,6 +36,12 @@ return {
         phpactor = {
           -- Run the Mason phar with short_open_tag on, so files opening with `<?` get parsed
           -- (the system php.ini has it off, and phpactor's tokenizer follows the runtime setting)
+          -- Skip URI-scheme buffers (diffview://, fugitive://): phpactor rejects their root with "unknown scheme"
+          root_dir = function(bufnr, on_dir)
+            if vim.api.nvim_buf_get_name(bufnr):match("^%a[%w+.-]*://") then return end
+            local root = vim.fs.root(bufnr, { ".git", "composer.json", ".phpactor.json", ".phpactor.yml" })
+            if root then on_dir(root) end
+          end,
           cmd = {
             "php",
             "-d",
