@@ -20,6 +20,7 @@ end, { desc = "Move tab right" })
 vim.keymap.set("n", "<leader><tab>H", function()
   pcall(vim.cmd, "-tabmove")
 end, { desc = "Move tab left" })
+vim.keymap.set("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close tab" })
 
 -- Paste the unnamed register inside the innermost bracket pair around the
 -- cursor (on the opening/closing bracket or anywhere inside). Pasted below the
