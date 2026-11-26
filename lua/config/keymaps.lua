@@ -135,7 +135,7 @@ vim.keymap.set("n", "<leader>cfi", function()
 end, { desc = "Format inner block" })
 
 vim.keymap.set("n", "<leader>fy", function()
-  local path = vim.fn.expand("%")
+  local path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":.")
   vim.fn.setreg("+", path)
   vim.notify("Copied relative path: " .. path)
 end, { desc = "Copy Relative File Path" })
