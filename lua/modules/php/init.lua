@@ -50,6 +50,15 @@ return {
             "language-server",
           },
         },
+        -- Auto-enabled by mason-lspconfig; lspconfig's default starts it with no root outside
+        -- Laravel projects and on URI-scheme buffers, where it fails with "unknown scheme"
+        laravel_ls = {
+          root_dir = function(bufnr, on_dir)
+            if vim.api.nvim_buf_get_name(bufnr):match("^%a[%w+.-]*://") then return end
+            local root = vim.fs.root(bufnr, { "artisan" })
+            if root then on_dir(root) end
+          end,
+        },
       },
     },
   },
