@@ -18,6 +18,7 @@ Essential keys to get minimally competent with LazyVim. Mostly LazyVim and Vim d
 | --- | --- |
 | `<leader>ff` | Find file |
 | `<leader>fy` | Copy relative file path |
+| `<leader>fY` | Copy absolute file path |
 | `<leader>sg` | Grep across project |
 | `<leader>sw` | Grep word under cursor |
 | `<leader>ss` | Go to symbol / method |
