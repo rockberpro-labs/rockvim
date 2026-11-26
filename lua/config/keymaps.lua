@@ -140,6 +140,12 @@ vim.keymap.set("n", "<leader>fy", function()
   vim.notify("Copied relative path: " .. path)
 end, { desc = "Copy Relative File Path" })
 
+vim.keymap.set("n", "<leader>fY", function()
+  local path = vim.fn.expand("%:p")
+  vim.fn.setreg("+", path)
+  vim.notify("Copied absolute path: " .. path)
+end, { desc = "Copy Absolute File Path" })
+
 require("which-key").add({
   { "<leader>cf", group = "format" },
   { "<leader>p", group = "paste", icon = "󰆒 " },
